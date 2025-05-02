@@ -59,16 +59,16 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100 font-sans">
+    <div className="h-screen flex flex-col bg-gray-100 font-sans">
       {/* Navbar */}
       <nav className="bg-blue-600 text-white px-6 py-4 text-xl font-semibold shadow">
         Realtime Chat App
       </nav>
 
       {/* Landing Section */}
-      <header className="bg-white shadow p-6 text-center">
-        <h1 className="text-3xl font-bold mb-2">Welcome to Chat Zone 👋</h1>
-        <p className="text-gray-600">Chat in realtime with your friends!</p>
+      <header className="bg-white shadow  text-center">
+        <h1 className="text-2xl font-semibold mb-2">Alex 👋</h1>
+        <p className="text-gray-600 text-sm">Chat in realtime with your friends!</p>
       </header>
 
       <main className="flex flex-1 overflow-hidden">
@@ -161,7 +161,7 @@ export default function ChatInterface() {
 
       {/* Footer */}
       <footer className="bg-blue-600 text-white text-center py-3">
-        Made with ❤️ | Chat App © 2025
+        Made By Aman | Chat App © 2025
       </footer>
     </div>
   );
