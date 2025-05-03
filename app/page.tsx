@@ -14,7 +14,7 @@ type Message = {
   emoji?: string;
 };
 
-const chatUsers = ["You", "Rohit Gupta", "Riya", "Sam"];
+const chatUsers = ["You", "Rohit Gupta", "Sakshi", "Ankit"];
 
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -28,9 +28,12 @@ export default function ChatInterface() {
     if (input.trim()) {
       const newMsg: Message = {
         id: Date.now(),
-        sender: "You",
+        sender: "Sakshi",
         content: input,
-        timestamp: new Date().toLocaleTimeString(),
+        timestamp: new Date().toLocaleTimeString([], {
+          hour: 'numeric',
+          minute: '2-digit',
+        }),
       };
       setMessages((prev) => [...prev, newMsg]);
       setInput("");
@@ -60,8 +63,8 @@ export default function ChatInterface() {
 
       {/* Landing Section */}
       <header className="bg-white shadow py-4 text-center flex justify-between items-center px-6">
-        <div className="flex-1 text-left ml-6">
-          <h2 className="font-bold text-[20px]">Chats</h2>
+        <div className="flex-1 text-left ml-6 hidden md:block">
+          <h2 className="font-bold text-[20px] ">Chats</h2>
         </div>
 
         <div className="flex-1 text-center">
@@ -80,9 +83,19 @@ export default function ChatInterface() {
                 fill="#606263"
               />
             </svg>
-            <div className=" w-[250px]">
-              <h1 className="text-[22px] font-semibold pr-28">Rohit Gupta</h1>
-              <p className="text-gray-500 text-sm pr-24">{typing ? "Rohit Gupta is typing..." : "Online"}</p>
+            <div className="">
+              <h1 className="text-[22px] font-semibold ml-3">Sakshi</h1>
+              <p className="text-sm flex items-center space-x-2 ml-3">
+                {typing ? (
+                  <span className="text-gray-500">typing...</span>
+                ) : (
+                  <>
+                    <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
+                    <span className="text-gray-500">Online</span>
+                  </>
+                )}
+              </p>
+
             </div>
           </div>
 
@@ -101,7 +114,7 @@ export default function ChatInterface() {
             {onlineUsers.map((user, i) => (
               <li
                 key={i}
-                className="flex items-center space-x-4 py-2 pl-2 shadow text-gray-700 cursor-pointer hover:bg-gray-400 rounded-lg"
+                className="flex items-center space-x-4 py-2 pl-2 shadow-sm text-gray-700 cursor-pointer hover:bg-blue-100 rounded-lg"
               >
                 {/* Avatar container */}
                 <div className="relative w-12 h-12">
@@ -144,31 +157,29 @@ export default function ChatInterface() {
 
         {/* Chat Box */}
         <section className="flex-1 flex flex-col justify-between p-4">
-          <div className="overflow-y-auto space-y-3 mb-4 flex-1">
+          <div className="overflow-y-auto space-y-2 p-3 flex-1">
             {messages.map((msg) => (
               <motion.div
                 key={msg.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`max-w-sm p-3 rounded-lg shadow ${msg.sender === "You"
-                  ? "ml-auto bg-blue-100"
-                  : "mr-auto bg-gray-200"
-                  }`}
+                className={`relative px-4 py-2 rounded-xl text-white max-w-[80%] w-fit
+        ${msg.sender === "You" ? "ml-auto bg-[#005c4b]" : "mr-auto bg-[#202c33]"}
+        text-sm sm:text-base
+      `}
               >
-                <div className="font-medium text-sm">{msg.sender}</div>
-                <div className="text-base">{msg.content} {msg.emoji || ""}</div>
-                <div className="text-xs text-right text-gray-500">
-                  {msg.timestamp}
-                </div>
+                <div className="break-words whitespace-pre-wrap">{msg.content} {msg.emoji || ""}</div>
+                <div className="text-[11px] text-gray-400 text-right mt-1">{msg.timestamp}</div>
               </motion.div>
             ))}
             <div ref={messageEndRef} />
-
           </div>
+
+
 
           {/* Chat Input */}
           <div className="relative w-full px-4 py-2">
-            <div className="flex items-center bg-[#1e1e1e] text-white rounded-full px-3 py-2 w-full">
+            <div className="flex items-center bg-white text-gray-500 rounded-full px-3 py-2 w-full">
               {/* Emoji Button */}
               <button
                 onClick={() => setEmojiPickerOpen(!emojiPickerOpen)}
@@ -202,14 +213,14 @@ export default function ChatInterface() {
                 }}
                 onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                 placeholder="Type a message"
-                className="flex-1 bg-transparent outline-none text-white placeholder:text-gray-400 h-[40px]"
+                className="flex-1 bg-transparent outline-none text-black placeholder:text-gray-400 h-[40px]"
               />
 
               {/* Send Button */}
               {input.trim() && (
                 <button
                   onClick={sendMessage}
-                  className="ml-2 w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 transition cursor-pointer"
+                  className="ml-2 w-10 h-10 bg-green-500 text-black rounded-full flex items-center justify-center hover:bg-green-600 transition cursor-pointer"
                   title="Send"
                 >
                   <svg
