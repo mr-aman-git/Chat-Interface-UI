@@ -52,7 +52,7 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gray-100 font-sans">
+    <div className="h-screen flex flex-col bg-gray-100 font-sans ">
       {/* Navbar */}
       <nav className="bg-blue-600 text-white px-6 py-4 text-xl font-semibold shadow">
         Realtime Chat App
@@ -76,15 +76,13 @@ export default function ChatInterface() {
             >
               <title>Profile</title>
               <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M17.822 21.678Q19.143 23 21 23t3.178-1.322T25.5 18.5t-1.322-3.178Q22.857 14 21 14t-3.178 1.322T16.5 18.5t1.322 3.178M12.66 32.34q.66.66 1.589.661h13.5q.928 0 1.59-.66.66-.662.66-1.59v-.9q0-.956-.492-1.758A3.3 3.3 0 0 0 28.2 26.87a16.7 16.7 0 0 0-3.544-1.308q-1.8-.435-3.656-.436-1.856 0-3.656.436T13.8 26.869a3.3 3.3 0 0 0-1.308 1.223A3.3 3.3 0 0 0 12 29.85v.9q0 .928.66 1.59m21.09.66h-2.392A4.16 4.16 0 0 0 32 30.75v-.9c0-1-.263-1.95-.788-2.804a5.3 5.3 0 0 0-1.675-1.713q.563.093 1.119.228 1.8.436 3.544 1.308.815.422 1.308 1.223.492.802.492 1.758v.9q0 .928-.661 1.59-.66.66-1.59.66M27 23a4.6 4.6 0 0 1-1.18-.147c1.105-1.211 1.68-2.692 1.68-4.353s-.575-3.142-1.68-4.353A4.6 4.6 0 0 1 27 14q1.856 0 3.178 1.322Q31.5 16.643 31.5 18.5t-1.322 3.178T27 23"
+                d="M24 23q-1.857 0-3.178-1.322Q19.5 20.357 19.5 18.5t1.322-3.178T24 14t3.178 1.322Q28.5 16.643 28.5 18.5t-1.322 3.178T24 23m-6.75 10q-.928 0-1.59-.66-.66-.662-.66-1.59v-.9q0-.956.492-1.758A3.3 3.3 0 0 1 16.8 26.87a16.7 16.7 0 0 1 3.544-1.308q1.8-.435 3.656-.436 1.856 0 3.656.436T31.2 26.87q.816.422 1.308 1.223T33 29.85v.9q0 .928-.66 1.59-.662.66-1.59.66z"
                 fill="#606263"
               />
             </svg>
-            <div>
-              <h1 className="text-2xl font-semibold ml-2">Rohit Gupta</h1>
-              <p className="text-gray-500 text-sm">{typing ? "Rohit Gupta is typing..." : "Online"}</p>
+            <div className=" w-[250px]">
+              <h1 className="text-[22px] font-semibold pr-28">Rohit Gupta</h1>
+              <p className="text-gray-500 text-sm pr-24">{typing ? "Rohit Gupta is typing..." : "Online"}</p>
             </div>
           </div>
 
@@ -97,13 +95,13 @@ export default function ChatInterface() {
 
       <main className="flex flex-1 overflow-hidden">
         {/* Online Users */}
-        <aside className="w-64 bg-white border-r p-4 overflow-y-auto hidden md:block">
+        <aside className="w-70 bg-white border-r p-4 overflow-y-auto hidden md:block">
 
-          <ul className="space-y-2">
+          <ul className="space-y-2 ">
             {onlineUsers.map((user, i) => (
               <li
                 key={i}
-                className="flex items-center space-x-4 py-5 border-b text-gray-700"
+                className="flex items-center space-x-4 py-2 pl-2 shadow text-gray-700 cursor-pointer hover:bg-gray-400 rounded-lg"
               >
                 {/* Avatar container */}
                 <div className="relative w-12 h-12">
@@ -119,9 +117,7 @@ export default function ChatInterface() {
                     >
                       <title>profile</title>
                       <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M17.822 21.678Q19.143 23 21 23t3.178-1.322T25.5 18.5t-1.322-3.178Q22.857 14 21 14t-3.178 1.322T16.5 18.5t1.322 3.178M12.66 32.34q.66.66 1.589.661h13.5q.928 0 1.59-.66.66-.662.66-1.59v-.9q0-.956-.492-1.758A3.3 3.3 0 0 0 28.2 26.87a16.7 16.7 0 0 0-3.544-1.308q-1.8-.435-3.656-.436-1.856 0-3.656.436T13.8 26.869a3.3 3.3 0 0 0-1.308 1.223A3.3 3.3 0 0 0 12 29.85v.9q0 .928.66 1.59m21.09.66h-2.392A4.16 4.16 0 0 0 32 30.75v-.9c0-1-.263-1.95-.788-2.804a5.3 5.3 0 0 0-1.675-1.713q.563.093 1.119.228 1.8.436 3.544 1.308.815.422 1.308 1.223.492.802.492 1.758v.9q0 .928-.661 1.59-.66.66-1.59.66M27 23a4.6 4.6 0 0 1-1.18-.147c1.105-1.211 1.68-2.692 1.68-4.353s-.575-3.142-1.68-4.353A4.6 4.6 0 0 1 27 14q1.856 0 3.178 1.322Q31.5 16.643 31.5 18.5t-1.322 3.178T27 23"
+                        d="M24 23q-1.857 0-3.178-1.322Q19.5 20.357 19.5 18.5t1.322-3.178T24 14t3.178 1.322Q28.5 16.643 28.5 18.5t-1.322 3.178T24 23m-6.75 10q-.928 0-1.59-.66-.66-.662-.66-1.59v-.9q0-.956.492-1.758A3.3 3.3 0 0 1 16.8 26.87a16.7 16.7 0 0 1 3.544-1.308q1.8-.435 3.656-.436 1.856 0 3.656.436T31.2 26.87q.816.422 1.308 1.223T33 29.85v.9q0 .928-.66 1.59-.662.66-1.59.66z"
                         fill="#606263"
                       />
                     </svg>
@@ -129,10 +125,17 @@ export default function ChatInterface() {
                 </div>
 
                 {/* User info */}
-                <div className="flex-1">
-                  <span className="block font-medium">{user}</span>
-                  <p className="text-sm text-gray-500">Last Message</p>
+                <div className="flex-1 cursor-pointer">
+                  <span className="block  font-semibold " title={`User: ${user}`}>{user}</span>
+                  <p
+                    className="text-sm text-[#686969] truncate max-w-[200px]"
+                    title={typing ? "Typing..." : "Latest Message from this user"}
+                  >
+                    {typing ? "Typing..." : "Latest Message from this user".slice(0, 20) + ("Latest Message from this user".length > 20 ? "..." : "")}
+                  </p>
+
                 </div>
+
               </li>
             ))}
           </ul>
@@ -164,46 +167,64 @@ export default function ChatInterface() {
           </div>
 
           {/* Chat Input */}
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setEmojiPickerOpen(!emojiPickerOpen)}
-              className="text-xl"
-              title="Add emoji"
-            >
-              😊
-            </button>
+          <div className="relative w-full px-4 py-2">
+            <div className="flex items-center bg-[#1e1e1e] text-white rounded-full px-3 py-2 w-full">
+              {/* Emoji Button */}
+              <button
+                onClick={() => setEmojiPickerOpen(!emojiPickerOpen)}
+                className="text-2xl mr-2 cursor-pointer"
+                title="Add emoji"
+              >
+                😊
+              </button>
 
-            {emojiPickerOpen && (
-              <div className="absolute bottom-20 left-4 bg-white p-2 rounded shadow flex space-x-1">
-                {["😀", "😎", "🔥", "❤️", "😂", "👍"].map((e) => (
-                  <button
-                    key={e}
-                    onClick={() => addEmoji(e)}
-                    className="text-2xl hover:scale-110 transition-transform"
+              {/* Emoji Picker */}
+              {emojiPickerOpen && (
+                <div className="absolute bottom-14 left-10 bg-white p-2 rounded shadow flex space-x-1 z-50">
+                  {["😀", "😎", "🔥", "❤️", "😂", "👍"].map((e) => (
+                    <button
+                      key={e}
+                      onClick={() => addEmoji(e)}
+                      className="text-2xl hover:scale-110 transition-transform"
+                    >
+                      {e}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Input Field */}
+              <input
+                value={input}
+                onChange={(e) => {
+                  setInput(e.target.value);
+                  setTyping(true);
+                }}
+                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                placeholder="Type a message"
+                className="flex-1 bg-transparent outline-none text-white placeholder:text-gray-400 h-[40px]"
+              />
+
+              {/* Send Button */}
+              {input.trim() && (
+                <button
+                  onClick={sendMessage}
+                  className="ml-2 w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 transition cursor-pointer"
+                  title="Send"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-5 h-5 rotate-45"
                   >
-                    {e}
-                  </button>
-                ))}
-              </div>
-            )}
+                    <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
+                  </svg>
+                </button>
+              )}
 
-            <input
-              value={input}
-              onChange={(e) => {
-                setInput(e.target.value);
-                setTyping(true);
-              }}
-              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-              placeholder="Type your message..."
-              className="flex-1 p-2 rounded border"
-            />
-            <button
-              onClick={sendMessage}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            >
-              Send
-            </button>
+            </div>
           </div>
+
         </section>
       </main>
 
