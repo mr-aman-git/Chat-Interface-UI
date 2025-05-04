@@ -1,6 +1,6 @@
 
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, SetStateAction } from "react";
 import { motion } from "framer-motion";
 import { LockClosedIcon } from '@heroicons/react/24/outline';
 
@@ -23,7 +23,12 @@ export default function ChatInterface() {
   const [onlineUsers] = useState(chatUsers);
   const messageEndRef = useRef<HTMLDivElement>(null);
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [showChat, setShowChat] = useState(false);
 
+  function showContent(data: SetStateAction<string | null>) {
+    setSelectedUser(data);
+    setShowChat(true)
+  }
 
   const sendMessage = () => {
     if (input.trim()) {
@@ -39,7 +44,9 @@ export default function ChatInterface() {
       setMessages((prev) => [...prev, newMsg]);
       setInput("");
     }
+
   };
+
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -65,49 +72,53 @@ export default function ChatInterface() {
       {/* Main Layout */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-[280px] bg-white border-r hidden md:flex flex-col items-center p-4">
-          <h2 className="font-bold text-[20px] mb-4">Chats</h2>
-          <ul className="space-y-2 w-full">
-            {onlineUsers.map((user, i) => (
-              <li
-                key={i}
-                onClick={() => setSelectedUser(user)}
-                className={`flex items-center space-x-4 py-2 pl-2 shadow-sm text-gray-700 cursor-pointer hover:bg-blue-100 rounded-lg 
+
+
+        <aside className={`w-[410px] md:w-[280px] bg-white md:border-r  md:flex flex-col items-center p-4 ${showChat ? "hidden" : "block"} md:block`}>
+          <div >
+            <h2 className="font-bold text-[20px] mb-4">Chats</h2>
+            <ul className="space-y-2 w-full">
+              {onlineUsers.map((user, i) => (
+                <li
+                  key={i}
+                  onClick={() => showContent(user)}
+                  className={`flex items-center space-x-4 py-2 md:px-6 p-2 shadow-sm text-gray-700 cursor-pointer hover:bg-blue-100 rounded-lg 
             ${selectedUser === user ? "bg-blue-200" : ""}`}
-              >
-                <div className="relative w-12 h-12">
-                  <div className="w-full h-full rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
-                    <svg
-                      viewBox="0 0 48 48"
-                      width="70"
-                      height="70"
-                      fill="none"
-                      className="text-gray-600"
-                    >
-                      <title>profile</title>
-                      <path
-                        d="M24 23q-1.857 0-3.178-1.322Q19.5 20.357 19.5 18.5t1.322-3.178T24 14t3.178 1.322Q28.5 16.643 28.5 18.5t-1.322 3.178T24 23m-6.75 10q-.928 0-1.59-.66-.66-.662-.66-1.59v-.9q0-.956.492-1.758A3.3 3.3 0 0 1 16.8 26.87a16.7 16.7 0 0 1 3.544-1.308q1.8-.435 3.656-.436 1.856 0 3.656.436T31.2 26.87q.816.422 1.308 1.223T33 29.85v.9q0 .928-.66 1.59-.662.66-1.59.66z"
-                        fill="#606263"
-                      />
-                    </svg>
+                >
+                  <div className="relative w-12 h-12">
+                    <div className="w-full h-full rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
+                      <svg
+                        viewBox="0 0 48 48"
+                        width="70"
+                        height="70"
+                        fill="none"
+                        className="text-gray-600"
+                      >
+                        <title>profile</title>
+                        <path
+                          d="M24 23q-1.857 0-3.178-1.322Q19.5 20.357 19.5 18.5t1.322-3.178T24 14t3.178 1.322Q28.5 16.643 28.5 18.5t-1.322 3.178T24 23m-6.75 10q-.928 0-1.59-.66-.66-.662-.66-1.59v-.9q0-.956.492-1.758A3.3 3.3 0 0 1 16.8 26.87a16.7 16.7 0 0 1 3.544-1.308q1.8-.435 3.656-.436 1.856 0 3.656.436T31.2 26.87q.816.422 1.308 1.223T33 29.85v.9q0 .928-.66 1.59-.662.66-1.59.66z"
+                          fill="#606263"
+                        />
+                      </svg>
+                    </div>
                   </div>
-                </div>
-                <div className="flex-1">
-                  <span className="block font-semibold" title={`User: ${user}`}>{user}</span>
-                  <p
-                    className="text-sm text-[#686969] truncate max-w-[200px]"
-                    title={typing ? "Typing..." : "Latest Message from this user"}
-                  >
-                    {typing ? "Typing..." : "Latest Message from this user".slice(0, 20) + "..."}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
+                  <div className="flex-1">
+                    <span className="block font-semibold" title={`User: ${user}`}>{user}</span>
+                    <p
+                      className="text-sm text-[#686969] truncate max-w-[200px]"
+                      title={typing ? "Typing..." : "Latest Message from this user"}
+                    >
+                      {typing ? "Typing..." : "Latest Message from this user".slice(0, 20) + "..."}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </aside>
 
         {/* Chat Area */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col ">
           {/* Header */}
           {
             selectedUser ? (
@@ -145,7 +156,8 @@ export default function ChatInterface() {
           }
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-2">
+
+          <div className="flex-1 overflow-y-auto md:p-4 space-y-2">
             {messages.map((msg) => (
               <motion.div
                 key={msg.id}
@@ -215,10 +227,11 @@ export default function ChatInterface() {
                   )}
                 </div>
               </div>
+
             ) : (
 
               <div className="flex flex-col w-full h-[500px]  items-center">
-                <div>
+                <div className=" hidden md:block">
                   <img src="/chatImage.png" alt="" className="w-[380px] h-[auto] mix-blend-multiply" />
                   <div className="pt-6 pl-4">
                     <p
