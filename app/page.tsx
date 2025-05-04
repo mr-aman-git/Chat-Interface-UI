@@ -1,10 +1,8 @@
 
 "use client";
-
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { FaCamera } from "react-icons/fa";
-import { div } from "framer-motion/client";
+import { LockClosedIcon } from '@heroicons/react/24/outline';
 
 
 type Message = {
@@ -31,7 +29,7 @@ export default function ChatInterface() {
     if (input.trim()) {
       const newMsg: Message = {
         id: Date.now(),
-        sender: "Sakshi",
+        sender: "Rohit Gupta",
         content: input,
         timestamp: new Date().toLocaleTimeString([], {
           hour: 'numeric',
@@ -166,54 +164,78 @@ export default function ChatInterface() {
           </div>
 
           {/* Input */}
-          <div className="relative px-4 py-2 bg-white">
-            <div className="flex items-center bg-gray-100 text-gray-700 rounded-full px-3 py-2">
-              <button
-                onClick={() => setEmojiPickerOpen(!emojiPickerOpen)}
-                className="text-2xl mr-2"
-                title="Add emoji"
-              >
-                😊
-              </button>
 
-              {emojiPickerOpen && (
-                <div className="absolute bottom-14 left-10 bg-white p-2 rounded shadow flex space-x-1 z-50">
-                  {["😀", "😎", "🔥", "❤️", "😂", "👍"].map((e) => (
+          {selectedUser ?
+            (
+              <div className="relative px-4 py-2 bg-white">
+                <div className="flex items-center bg-gray-100 text-gray-700 rounded-full px-3 py-2">
+                  <button
+                    onClick={() => setEmojiPickerOpen(!emojiPickerOpen)}
+                    className="text-2xl mr-2"
+                    title="Add emoji"
+                  >
+                    😊
+                  </button>
+
+                  {emojiPickerOpen && (
+                    <div className="absolute bottom-14 left-10 bg-white p-2 rounded shadow flex space-x-1 z-50">
+                      {["😀", "😎", "🔥", "❤️", "😂", "👍"].map((e) => (
+                        <button
+                          key={e}
+                          onClick={() => addEmoji(e)}
+                          className="text-2xl hover:scale-110 transition-transform"
+                        >
+                          {e}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  <input
+                    value={input}
+                    onChange={(e) => {
+                      setInput(e.target.value);
+                      setTyping(true);
+                    }}
+                    onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                    placeholder="Type a message"
+                    className="flex-1 bg-transparent outline-none text-black placeholder:text-gray-400"
+                  />
+
+                  {input.trim() && (
                     <button
-                      key={e}
-                      onClick={() => addEmoji(e)}
-                      className="text-2xl hover:scale-110 transition-transform"
+                      onClick={sendMessage}
+                      className="ml-2 w-10 h-10 bg-green-500 text-black rounded-full flex items-center justify-center hover:bg-green-600"
+                      title="Send"
                     >
-                      {e}
+                      <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 rotate-45">
+                        <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
+                      </svg>
                     </button>
-                  ))}
+                  )}
                 </div>
-              )}
+              </div>
+            ) : (
 
-              <input
-                value={input}
-                onChange={(e) => {
-                  setInput(e.target.value);
-                  setTyping(true);
-                }}
-                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-                placeholder="Type a message"
-                className="flex-1 bg-transparent outline-none text-black placeholder:text-gray-400"
-              />
+              <div className="flex flex-col w-full h-[500px]  items-center">
+                <div>
+                  <img src="/chatImage.png" alt="" className="w-[380px] h-[auto] mix-blend-multiply" />
+                  <div className="pt-6 pl-4">
+                    <p
+                      className="pl-8 font-semibold"
+                    >Start a conversation by selecting a user.</p>
 
-              {input.trim() && (
-                <button
-                  onClick={sendMessage}
-                  className="ml-2 w-10 h-10 bg-green-500 text-black rounded-full flex items-center justify-center hover:bg-green-600"
-                  title="Send"
-                >
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 rotate-45">
-                    <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
-                  </svg>
-                </button>
-              )}
-            </div>
-          </div>
+                  </div>
+                  <p
+                    className="pt-2 flex"
+                  > <LockClosedIcon className="w-4 h-4 mt-1 mr-0.5" /> Your personal messages are end-to-end encrypted</p>
+                </div>
+              </div>
+
+
+            )
+          }
+
         </div>
       </div>
 
