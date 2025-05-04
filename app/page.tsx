@@ -3,6 +3,9 @@
 import { useState, useEffect, useRef, SetStateAction } from "react";
 import { motion } from "framer-motion";
 import { LockClosedIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+
 
 
 type Message = {
@@ -24,17 +27,32 @@ export default function ChatInterface() {
   const messageEndRef = useRef<HTMLDivElement>(null);
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
   const [showChat, setShowChat] = useState(false);
-
+  const [query, setQuery] = useState("");
   function showContent(data: SetStateAction<string | null>) {
     setSelectedUser(data);
     setShowChat(true)
   }
 
+
+
+  const searchQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+
+  };
+
+  const filteredUsers = onlineUsers.filter((user) =>
+    user.toLowerCase().includes(query.toLowerCase())
+  );
+
+  const handleBack = () => {
+    setShowChat(false);
+  };
+
   const sendMessage = () => {
     if (input.trim()) {
       const newMsg: Message = {
         id: Date.now(),
-        sender: "Rohit Gupta",
+        sender: "You",
         content: input,
         timestamp: new Date().toLocaleTimeString([], {
           hour: 'numeric',
@@ -74,11 +92,24 @@ export default function ChatInterface() {
         {/* Sidebar */}
 
 
-        <aside className={`w-[410px] md:w-[280px] bg-white md:border-r  md:flex flex-col items-center p-4 ${showChat ? "hidden" : "block"} md:block`}>
+        <aside className={`w-[420px] md:w-[290px] bg-white md:border-r  md:flex flex-col items-center p-4 ${showChat ? "hidden" : "block"} md:block`}>
           <div >
-            <h2 className="font-bold text-[20px] mb-4">Chats</h2>
+            <h2 className="font-bold text-[20px] mb-4 pl-10">Chats</h2>
+            <div className="w-full max-w-md px-4 py-2">
+
+              <div className="relative">
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" />
+                <input
+                  type="text"
+                  value={query}
+                  onChange={searchQuery}
+                  placeholder="Search user"
+                  className="w-full md:w-auto pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 text-sm sm:text-base"
+                />
+              </div>
+            </div>
             <ul className="space-y-2 w-full">
-              {onlineUsers.map((user, i) => (
+              {filteredUsers.map((user, i) => (
                 <li
                   key={i}
                   onClick={() => showContent(user)}
@@ -106,9 +137,9 @@ export default function ChatInterface() {
                     <span className="block font-semibold" title={`User: ${user}`}>{user}</span>
                     <p
                       className="text-sm text-[#686969] truncate max-w-[200px]"
-                      title={typing ? "Typing..." : "Latest Message from this user"}
+                      title="Latest Message from this user"
                     >
-                      {typing ? "Typing..." : "Latest Message from this user".slice(0, 20) + "..."}
+                      {"Latest Message from this user".slice(0, 20) + "..."}
                     </p>
                   </div>
                 </li>
@@ -123,12 +154,15 @@ export default function ChatInterface() {
           {
             selectedUser ? (
               <div className="bg-white shadow flex items-center px-4 h-16">
+                <button className="block md:hidden py-2 cursor-pointer" onClick={handleBack}>
+                  <ArrowLeftIcon className="h-6 w-6 text-gray-700" />
+                </button>
                 <svg
                   viewBox="0 0 48 48"
                   width="45"
                   height="45"
                   fill="none"
-                  className="text-gray-600 w-[45px] rounded-full bg-gray-300"
+                  className="text-gray-600 w-[45px] rounded-full bg-gray-300 ml-2 md:ml-0"
                 >
                   <title>Profile</title>
                   <path
@@ -157,13 +191,13 @@ export default function ChatInterface() {
 
           {/* Messages */}
 
-          <div className="flex-1 overflow-y-auto md:p-4 space-y-2">
+          <div className="flex-1 overflow-y-auto md:p-4 space-y-2 p-2">
             {messages.map((msg) => (
               <motion.div
                 key={msg.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`relative px-4 py-2 rounded-xl text-white max-w-[80%] w-fit ${msg.sender === "You" ? "ml-auto bg-[#005c4b]" : "mr-auto bg-[#202c33]"
+                className={`relative px-4 py-2 rounded-xl text-[#313c31] max-w-[80%] w-fit ${msg.sender === "You" ? "ml-auto bg-blue-100" : "mr-auto bg-[#ffffff]"
                   } text-sm sm:text-base`}
               >
                 <div className="break-words whitespace-pre-wrap">
