@@ -81,9 +81,9 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gray-100 font-sans">
+    <div className="md:h-screen h-[100dvh] flex flex-col bg-gray-100 font-sans">
       {/* Navbar */}
-      <nav className="bg-blue-600 text-white px-6 py-4 text-xl font-semibold shadow">
+      <nav className="bg-blue-600 text-white px-6 py-4 text-xl font-semibold shadow hidden md:block">
         Realtime Chat App
       </nav>
 
@@ -153,7 +153,7 @@ export default function ChatInterface() {
           {/* Header */}
           {
             selectedUser ? (
-              <div className="bg-white shadow flex items-center px-4 h-16">
+              <div className="bg-white shadow flex items-center px-4 h-16 shrink-0">
                 <button className="block md:hidden py-2 cursor-pointer" onClick={handleBack}>
                   <ArrowLeftIcon className="h-6 w-6 text-gray-700" />
                 </button>
@@ -287,7 +287,7 @@ export default function ChatInterface() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-blue-600 text-white text-center py-3 text-sm">
+      <footer className="bg-blue-600 text-white text-center py-3 text-sm hidden md:block">
         Made By Aman | Chat App © 2025
       </footer>
     </div>
